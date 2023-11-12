@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"text/tabwriter"
 
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/lafferjm/go_weather/weather"
@@ -26,6 +27,19 @@ func getChoices(locations []weather.Location) []string {
 	}
 
 	return choices
+}
+
+func displayForecast(forecast weather.Forecast) {
+	w := new(tabwriter.Writer)
+	w.Init(os.Stdout, 0, 8, 0, '\t', 0)
+	fmt.Fprintln(w, "Day\tMin Temp \tMax Temp")
+	for i := 0; i < len(forecast.Daily.Time); i++ {
+		time := forecast.Daily.Time[i]
+		minTemp := forecast.Daily.MinTemperature[i]
+		maxTemp := forecast.Daily.MaxTemperature[i]
+		fmt.Fprintf(w, "%s\t%0.1f\t%0.1f\n", time, minTemp, maxTemp)
+	}
+	w.Flush()
 }
 
 var forecastCmd = &cobra.Command{
@@ -59,6 +73,6 @@ var forecastCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
-		fmt.Println(forecast)
+		displayForecast(*forecast)
 	},
 }
