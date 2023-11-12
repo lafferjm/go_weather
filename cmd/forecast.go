@@ -53,6 +53,6 @@ var forecastCmd = &cobra.Command{
 			survey.AskOne(prompt, &choiceIndex)
 		}
 
-		fmt.Println(forecast.Results[choiceIndex])
+		weather.GetForecast(forecast.Results[choiceIndex])
 	},
 }
