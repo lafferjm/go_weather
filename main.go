@@ -1,10 +1,9 @@
 package main
 
 import (
-	"fmt"
-	"github.com/spf13/cobra"
+	"github.com/lafferjm/go_weather/cmd"
 )
 
 func main() {
-	fmt.Println("Hello World")
+	cmd.Execute()
 }
